@@ -8,7 +8,7 @@
         props: ['name']
     }
 </script>
-<style lamg="scss">
+<style lang="scss">
     .g-icon{
         width:1em;
         height: 1em;
