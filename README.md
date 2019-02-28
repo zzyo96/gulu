@@ -2,7 +2,7 @@
 
 [![Build Status](https://www.travis-ci.org/zzyo96/gulu.svg?branch=master)](https://www.travis-ci.org/zzyo96/gulu)
 
-##介绍
+## 介绍
 
 这是我在学习vue过程中做的一个Ui 框架，希望对你有用2019-2-28。
 
@@ -47,12 +47,12 @@ export default {
   }
 }
 ```
-##文档
+## 文档
 
-##提问
+## 提问
 
-##变更记录
+## 变更记录
 
-##联系方式
+## 联系方式
 
-##贡献代码
+## 贡献代码
