@@ -35,8 +35,9 @@
       })
     },
     methods: {
-      xxx () {
+      xxx() {
         this.eventBus.$emit('update:selected', this.name)
+      }
     }
   }
 </script>
