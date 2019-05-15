@@ -19,24 +19,24 @@
 </script>
 
 <style lang="scss" scoped>
-    .g-button-group{
+    .g-button-group {
         display: inline-flex;
         vertical-align: middle;
-        > .g-button{
+        > .g-button {
             border-radius: 0;
-            &:not(:first-child){
+            &:not(:first-child) {
                 margin-left: -1px;
             }
-            &:first-child{
+            &:first-child {
                 border-top-left-radius: var(--border-radius);
                 border-bottom-left-radius: var(--border-radius);
             }
-            &:last-child{
+            &:last-child {
                 border-top-right-radius: var(--border-radius);
                 border-bottom-right-radius: var(--border-radius);
             }
-            &:hover{
-                position: absolute;
+            &:hover {
+                position: relative;
                 z-index: 1;
             }
         }
