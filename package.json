@@ -26,8 +26,7 @@
   "homepage": "https://github.com/zzyo96/gulu#readme",
   "dependencies": {
     "vue": "^2.5.21",
-    "vue-hot-reload-api": "^2.3.0",
-    "vue2": "^1.0.0"
+    "vue-hot-reload-api": "^2.3.0"
   },
   "devDependencies": {
     "@vue/component-compiler-utils": "^2.3.1",
