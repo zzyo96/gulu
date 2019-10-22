@@ -2,8 +2,10 @@
     <div class="wrapper" :class="toastClasses">
         <div class="toast" ref="toast">
             <div class="message">
-                <slot v-if="!enableHtml"></slot>
-                <div v-else v-html="$slots.default[0]"></div>
+                <!--<slot v-if="!enableHtml"></slot>-->
+                <!--<div v-else v-html="$slots.default[0]"></div>-->
+                <div v-if="existHtml" v-html="$slots.default[0]"></div>
+                <slot v-else></slot>
             </div>
             <div class="line" ref="line"></div>
             <span class="close" v-if="closeButton" @click="onClickClose">
@@ -36,6 +38,10 @@
         type: Boolean,
         default: false
       },
+        existHtml:{
+            type:Boolean,
+            default:true
+        },
       position: {
         type: String,
         default: 'top',
