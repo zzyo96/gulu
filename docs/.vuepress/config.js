@@ -10,11 +10,11 @@ module.exports = {
     ],
     sidebar: [
       {
-        title:'入门',
-        children:[
-          '/install/',
-          '/get-started/',
-        ]
+          title: '入门',
+          children: [
+              ['/安装', '安装'],
+              [ '/快速上手','快速入门']
+          ]
       },
       {
         title:'组件',
