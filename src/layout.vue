@@ -4,31 +4,31 @@
     </div>
 </template>
 <script>
-  export default {
-    name: 'GuluLayout',
-    data () {
-      return {
-        layoutClass: {
-          hasSider: false
+    export default {
+        name:'GuluLayout',
+        data(){
+            return {
+                layoutClass:{
+                    hasSider:false
+                }
+            }
+        },
+        mounted(){
+            this.$children.forEach((vm)=>{
+                if ( vm.$options.name === 'GuluSider'){
+                    this.layoutClass.hasSider = true
+                }
+            })
         }
-      }
-    },
-    mounted () {
-      this.$children.forEach((vm) => {
-        if (vm.$options.name === 'GuluSider') {
-          this.layoutClass.hasSider = true
-        }
-      })
     }
-  }
 </script>
-
-<style lang="scss" scoped>
+<style scoped lang="scss">
     .layout {
-        flex-grow: 1;
         display: flex;
+        flex-grow: 1;
         flex-direction: column;
-        &.hasSider {
+
+        &.hasSider{
             flex-direction: row;
         }
     }

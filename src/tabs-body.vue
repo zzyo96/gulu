@@ -4,14 +4,12 @@
     </div>
 </template>
 <script>
-  export default {
-    name: 'GuluTabsBody',
-    inject: ['eventBus'],
-    created(){
+    export default {
+        name: 'GuluTabsBody',
+        props:{
+        },
+        created(){
+        }
     }
-  }
 </script>
-<style>
-    .tabs-body {
-    }
-</style>
+<style lang="scss"></style>

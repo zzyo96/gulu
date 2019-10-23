@@ -22,7 +22,7 @@ module.exports = {
           '/components/button',
           '/components/tabs',
           '/components/input',
-          '/components/grid',
+          // '/components/grid',
           '/components/layout',
           '/components/toast'
         ]

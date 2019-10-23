@@ -1,157 +1,157 @@
 <template>
-    <div class="wrapper" :class="toastClasses">
+    <div class="gulu-wrapper" :class="positionClass">
         <div class="toast" ref="toast">
             <div class="message">
-                <!--<slot v-if="!enableHtml"></slot>-->
-                <!--<div v-else v-html="$slots.default[0]"></div>-->
                 <div v-if="existHtml" v-html="$slots.default[0]"></div>
                 <slot v-else></slot>
             </div>
             <div class="line" ref="line"></div>
-            <span class="close" v-if="closeButton" @click="onClickClose">
-                {{closeButton.text}}
-              </span>
+            <span class="close" v-if="closeButton" @click="onClickClose">{{closeButton.text}}</span>
         </div>
     </div>
 </template>
 <script>
-  //构造组件的选项
-  export default {
-    name: 'GuluToast',
-    props: {
-      autoClose: {
-        type: [Boolean, Number],
-        default: 5,
-        validator (value) {
-          return value === false || typeof value === 'number';
-        }
-      },
-      closeButton: {
-        type: Object,
-        default () {
-          return {
-            text: '关闭', callback: undefined
-          }
-        }
-      },
-      enableHtml: {
-        type: Boolean,
-        default: false
-      },
-        existHtml:{
-            type:Boolean,
-            default:true
+    export default {
+        name: 'GuluToast',
+        props: {
+            autoClose: {
+                type: [Boolean,Number],
+                default: 5,
+                validator(value){
+                    return value === false || typeof value === "number";
+                }
+            },
+            closeButton: {
+                type: Object,
+                default: () => {
+                    return {
+                        text: '关闭',
+                        callback: undefined
+                    }
+                }
+            },
+            existHtml:{
+                type:Boolean,
+                default:true
+            },
+            position:{
+                type:String,
+                default:'top',
+                validator(value){
+                    return  ['top','bottom','center'].indexOf(value) >= 0
+                }
+            }
         },
-      position: {
-        type: String,
-        default: 'top',
-        validator(value) {
-          return ['top', 'bottom', 'middle'].indexOf(value) >= 0
+        created(){
+        },
+        mounted() {
+            this.execAutoClose();
+            this.updateStyle();
+        },
+        computed:{
+          positionClass(){
+              return {
+                  [`position-${this.position}`]:true
+              }
+          }
+        },
+        methods: {
+            execAutoClose(){
+                if (this.autoClose) {
+                    setTimeout(() => {
+                        this.close()
+                    }, this.autoClose * 1000)
+                }
+            },
+            updateStyle(){
+                this.$nextTick(()=>{
+                    this.$refs.line.style.height = `${this.$refs.toast.getBoundingClientRect().height}px`
+                })
+            },
+            close() {
+                this.$el.remove()
+                this.$emit('close')
+                this.$destroy()
+            },
+            log(){
+                console.log('测试');
+            },
+            onClickClose() {
+                this.close();
+                if (this.closeButton && typeof this.closeButton.callback === 'function') {
+                    this.closeButton.callback(this);
+                }
+            }
         }
-      }
-    },
-    created () {
-    },
-    mounted () {
-      this.updateStyles()
-      this.execAutoClose()
-    },
-    computed: {
-      toastClasses () {
-        return {
-          [`position-${this.position}`]: true
-        }
-      }
-    },
-    methods: {
-      updateStyles () {
-        this.$nextTick(() => {
-          this.$refs.line.style.height =
-            `${this.$refs.toast.getBoundingClientRect().height}px`
-        })
-      },
-      execAutoClose () {
-        if (this.autoClose) {
-          setTimeout(() => {
-            this.close()
-          }, this.autoClose * 1000)
-        }
-      },
-      close () {
-        this.$el.remove()
-        this.$emit('close')
-        this.$destroy()
-      },
-      onClickClose () {
-        this.close()
-        if (this.closeButton && typeof this.closeButton.callback === 'function') {
-          this.closeButton.callback(this)//this === toast实例
-        }
-      }
     }
-  }
 </script>
-<style scoped lang="scss">
+<style lang="scss">
     $font-size: 14px;
     $toast-min-height: 40px;
-    $toast-bg: rgba(0, 0, 0, 0.75);
+    $toast-bg: rgb(121,189,143);
     @keyframes slide-up {
-        0% {opacity: 0; transform: translateY(100%);}
-        100% {opacity: 1;transform: translateY(0%);}
+        0%{opacity: 0;transform: translateY(-100%)}
+        100%{opacity: 1;transform: translateY(0%)}
     }
     @keyframes slide-down {
-        0% {opacity: 0; transform: translateY(-100%);}
-        100% {opacity: 1;transform: translateY(0%);}
+        0%{opacity: 0;transform: translateY(100%)}
+        100%{opacity: 1;transform: translateY(0%)}
     }
     @keyframes fade-in {
-        0% {opacity: 0; }
-        100% {opacity: 1;}
+        0%{opacity: 0;}
+        100%{opacity: 1;}
     }
-    .wrapper {
+    .gulu-wrapper{
         position: fixed;
         left: 50%;
-        transform: translateX(-50%);
-        $animation-duration: 300ms;
-        &.position-top {
+        &.position-top{
             top: 0;
-            .toast {
-                border-top-left-radius: 0;
-                border-top-right-radius: 0;
-                animation: slide-down $animation-duration;
+            transform: translateX(-50%);
+            & > .toast{
+                animation: slide-up 0.5s;
+                border-bottom-left-radius: 4px;
+                border-bottom-right-radius: 4px;
             }
         }
-        &.position-bottom {
+        &.position-bottom{
             bottom: 0;
-            .toast {
-                border-bottom-left-radius: 0;
-                border-bottom-right-radius: 0;
-                animation: slide-up $animation-duration;
+            transform: translateX(-50%);
+            & > .toast{
+                animation: slide-down 0.5s;
+                border-top-left-radius: 4px;
+                border-top-right-radius: 4px;
             }
         }
-        &.position-middle {
+        &.position-center{
             top: 50%;
-            transform: translateX(-50%) translateY(-50%);
-            .toast {
-                animation: fade-in $animation-duration;
+            transform: translate(-50%,-50%);
+            & > .toast{
+                animation: fade-in 0.5s;
+                border-radius: 4px;
             }
         }
     }
     .toast {
-        font-size: $font-size; min-height: $toast-min-height; line-height: 1.8;
+        font-size: $font-size;
+        min-height: $toast-min-height;
+        line-height: 1.8;
+        box-shadow: 0 0 5px 0 rgba(255, 97, 96, 0.50);
+        padding: 0 16px;
+        background: $toast-bg;
         display: flex;
-        color: white; align-items: center; background: $toast-bg; border-radius: 4px;
-        box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.50); padding: 0 16px;
-        .message {
-            padding: 8px 0;
+        align-items: center;
+        .message{
+            padding: 4px 0;
         }
         .close {
-            padding-left: 16px;
-            flex-shrink: 0;
-        }
-        .line {
             height: 100%;
-            border-left: 1px solid #666;
-            margin-left: 16px;
+            cursor: pointer;
+            flex-shrink: 0;
+            padding-left: 10px;
+        }
+        .line{
+            margin-left: 10px;
+            border-left: 1px solid white;
         }
     }
 </style>
